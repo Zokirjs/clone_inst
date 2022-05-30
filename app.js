@@ -1,10 +1,28 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+const morgan = require('morgan');
 require('dotenv').config();
 
-// Middleware
 
+// connect to mongoDB
+mongoose.connect(process.env.MONGO_URI).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Error:', err.message);
+});
+
+
+// Middleware
+app.use(morgan('tiny'));
 app.use(express.json());
+
+
+// Routes
+
+app.get('/', (req, res) => {
+    res.send('Hello World1');
+});
 
 
 
